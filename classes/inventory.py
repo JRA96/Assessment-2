@@ -27,17 +27,15 @@ class Inventory():
         
     @classmethod
     def rent_a_video(self, customer_object, video_object):
-        if customer_object.current_video_rentals != '':
-            number_of_rented_videos = len(customer_object.current_video_rentals.split('/'))
-        else:
-            number_of_rented_videos = 0
+        number_of_rented_videos = 0
         # perform some qucik checks to see if data is valid before continuing
         if customer_object == None:
             print('Invalid customer id')
-            if video_object == None:
-                print('Invalid video title')
             return
-        elif video_object.copies_available == 0:
+        if video_object == None:
+            print('Invalid video title')
+            return
+        if video_object.copies_available == '0':
             print("There are no copies available to rent for this title")
             return
         # now perform some checks to see if they can rent a video base on account type
@@ -51,6 +49,8 @@ class Inventory():
             print("This account is restricted from renting 'R' rated movies\n")
             return
         # done with checks, execute the renting feature
+        if len(customer_object.current_video_rentals) > 1:
+            number_of_rented_videos = len(customer_object.current_video_rentals.split('/'))
         video_object.copies_available = str(int(video_object.copies_available) - 1)
         if number_of_rented_videos > 0:
             customer_object.current_video_rentals += f'/{video_object.title}'
@@ -60,20 +60,23 @@ class Inventory():
     
     @classmethod
     def return_a_video(self, customer_object, video_object):
-        if customer_object.current_video_rentals != '':
-            number_of_rented_videos = len(customer_object.current_video_rentals.split('/'))
-        else:
-            number_of_rented_videos = 0
+        number_of_rented_videos = 0
         # repeat quick check for valid data
         if customer_object == None:
             print('Invalid customer id')
-            if video_object == None:
-                print('Invalid video title')
+            return
+        if video_object == None:
+            print('Invalid video title')
             return
         elif number_of_rented_videos == 0:
             print("This customer has no videos checked out.")
             return
+        elif video_object.title not in customer_object.current_video_rentals.split('/'):
+            print("This customer does not have that video checked out")
+            return
         # no other checks needed, execute return
+        if len(customer_object.current_video_rentals) > 1:
+            number_of_rented_videos = len(customer_object.current_video_rentals.split('/'))
         video_object.copies_available = str(int(video_object.copies_available) + 1)
         if number_of_rented_videos > 0:
             customer_object.current_video_rentals = customer_object.current_video_rentals.split('/')
