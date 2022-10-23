@@ -19,7 +19,7 @@ class Inventory():
             print(f'{items.title:<20}|{items.copies_available:^20}')
     
     @classmethod
-    def find_video_by_title(self, video_title):
+    def find_video_by_title(self, video_title): # this will help implement DRY coding
         for item_object in self.inventory:
             if item_object.title == video_title:
                 return item_object
@@ -30,7 +30,7 @@ class Inventory():
         number_of_rented_videos = 0
         if customer_object.current_video_rentals != '':
             number_of_rented_videos = len(customer_object.current_video_rentals.split('/'))
-        # perform some qucik checks to see if data is valid before continuing
+        # perform some quick checks to see if data is valid before continuing
         if customer_object == None:
             print('Invalid customer id')
             return

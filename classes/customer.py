@@ -17,7 +17,7 @@ class Customer():
             print(f'{name:<20}|{people.customer_id:^20}')
 
     @classmethod
-    def find_customer_by_id(self, id):
+    def find_customer_by_id(self, id): # this will help implement DRY coding
         for customer_obj in self.all_customers:
             if id == customer_obj.customer_id:
                 return customer_obj
