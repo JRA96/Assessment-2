@@ -1,4 +1,3 @@
-from multiprocessing.sharedctypes import Value
 import re
 from classes.inventory import Inventory
 from classes.customer import Customer
